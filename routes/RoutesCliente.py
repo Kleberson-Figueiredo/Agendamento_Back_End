@@ -3,20 +3,17 @@ from flask_restful import Resource, reqparse
 from services.Cliente import Cliente
 from ast import literal_eval
 
-
+parametros = reqparse.RequestParser()
+parametros.add_argument('nome', type=str, required=True)
+parametros.add_argument('rg', type=str, required=True)
+parametros.add_argument('cpf', type=str, required=True)
+parametros.add_argument('telefone', type=str, required=True)
 class ClienteInsertRoute(Resource):
 
     def post(self):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('nome', type=str, required=True)
-            parametros.add_argument('rg', type=str, required=True)
-            parametros.add_argument('cpf', type=str, required=True)
-            parametros.add_argument('telefone', type=str, required=True)
-
             argumentos = parametros.parse_args()
-            dados = (argumentos["nome"], argumentos["rg"], argumentos["cpf"],\
-                     argumentos["telefone"])
+            dados = (argumentos['nome'], argumentos['rg'], argumentos['cpf'], argumentos['telefone'])
 
             cliente = Cliente()
             resultado_insert = cliente.inserirCliente(dados)
@@ -84,12 +81,7 @@ class ClienteListByIdRoute(Resource):
 class ClienteUpdateRoute(Resource):
     def put(self, id):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('nome', type=str, required=True)
-            parametros.add_argument('rg', type=str, required=True)
-            parametros.add_argument('cpf', type=str, required=False)
-            parametros.add_argument('telefone', type=str, required=True)
-
+            
             argumentos = parametros.parse_args()
 
             valores = f"nome = '{argumentos ['nome']}', rg = '{argumentos ['rg']}',\

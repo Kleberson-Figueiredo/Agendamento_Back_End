@@ -27,7 +27,7 @@ api.add_resource(CategoriaUpdateRoute, "/categoria/<id>")               #put
 api.add_resource(CategoriaDeleteRoute, "/categoria/<id>")               #delete
 
 # Rotas para Cliente  
-api.add_resource(ClienteInsertRoute, "/cliente")                        #post
+api.add_resource(ClienteInsertRoute, "/cliente")                       #post
 api.add_resource(ClienteListRoute, "/cliente")                          #get
 api.add_resource(ClienteListByIdRoute, "/cliente/<id>")                 #get
 api.add_resource(ClienteUpdateRoute, "/cliente/<id>")                   #put
@@ -45,4 +45,5 @@ api.add_resource(ServicoDeleteRoute, "/servico/<id>")                   #delete
 
 if __name__=="__main__":
 
-    app.run(port=3000, debug=True)
+
+    app.run(port=4000, debug=True)

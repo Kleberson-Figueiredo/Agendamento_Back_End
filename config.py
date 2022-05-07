@@ -1,6 +1,6 @@
 import json
 
-with open ('config.json') as arquivo_json:
+with open ('credenciais.json') as arquivo_json:
     config = json.load(arquivo_json)
 
     USER = config.get('USER')

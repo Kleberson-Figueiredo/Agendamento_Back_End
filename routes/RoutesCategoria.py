@@ -3,14 +3,12 @@ from flask_restful import Resource, reqparse
 from services.Categoria import Categoria
 from ast import literal_eval
 
-
+parametros = reqparse.RequestParser()
+parametros.add_argument('descricao_categoria', type=str, required=True)
 class CategoriaInsertRoute(Resource):
 
     def post(self):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('descricao_categoria', type=str, required=True)
-
             argumentos = parametros.parse_args()
             dados = (argumentos["descricao_categoria"])
 

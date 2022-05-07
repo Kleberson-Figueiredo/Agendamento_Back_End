@@ -4,15 +4,17 @@ from mysql.connector.utils import read_bytes
 from services.Servico import Servico
 from ast import literal_eval
 
+parametros = reqparse.RequestParser()
+parametros.add_argument('descricao_servico', type=str, required=True)
+parametros.add_argument('valor', type=str, required=True)
+parametros.add_argument('categoria_fk', type=str, required=False)
+
 
 class ServicoInsertRoute(Resource):
 
     def post(self):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('descricao_servico', type=str, required=True)
-            parametros.add_argument('valor', type=str, required=True)
-            parametros.add_argument('categoria_fk', type=str, required=False)
+            
 
             argumentos = parametros.parse_args()
             dados = (argumentos['descricao_servico'], argumentos['valor'], argumentos['categoria_fk'])
@@ -82,10 +84,6 @@ class ServicoListByIdRoute(Resource):
 class ServicoUpdateRoute(Resource):
     def put(self, id):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('descricao_servico', type=str, required=True)
-            parametros.add_argument('valor', type=str, required=True)
-            parametros.add_argument('categoria_fk', type=str, required=False)
 
             argumentos = parametros.parse_args()
             valores = f"descricao_servico = '{argumentos['descricao_servico']}', valor = '{argumentos['valor']}', categoria_fk = '{argumentos['categoria_fk']}'"
@@ -109,10 +107,6 @@ class ServicoUpdatePatchRoute(Resource):
 
     def patch(self, id):
         try:
-            parametros = reqparse.RequestParser()
-            parametros.add_argument('descricao', type=str, required=True)
-            parametros.add_argument('valor', type=str, required=True)
-            parametros.add_argument('categoria_fk', type=str, required=False)
 
             args = parametros.parse_args()
             dicion_args = dict(args)
