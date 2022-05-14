@@ -80,7 +80,7 @@ class Cliente(Conexao):
     def deleteCliente(self, id):
         cursor = self.conexao.cursor()
         try:
-            query_sql = f"DELETE FROM Cliente WHERE idCliente = {id}"
+            query_sql = f"DELETE FROM db_agendamento.Cliente WHERE idCliente = {id}"
             cursor.execute(query_sql)
             self.conexao.commit()
 
