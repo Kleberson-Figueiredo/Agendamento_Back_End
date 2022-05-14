@@ -13,24 +13,37 @@ parametros.add_argument('cpf', type=str, required=True,help='CPF é obrigatório
 parametros.add_argument('telefone', type=str, required=True, help='Telefone é obrigatório')
 
 class Clientes(Resource):
+
     def get(self):
-        cliente = Cliente.listarClientes(self)
-        if cliente:
-            return literal_eval(cliente)
-        return {
-            "sucesso": False,
-            "mensagem": "Nenhum dado a ser exibido" }
+        try:
+            cliente = Cliente.listarClientes(self)
+            if cliente:
+                return literal_eval(cliente)
+            return {
+                "sucesso": False,
+                "mensagem": "Nenhum dado a ser exibido" }
+        except:
+            return {
+                "sucesso": False,
+                "mensagem": "Erro de servidor interno, Contate o admin para mais detalhes" }
+
+
 class CadastroCliente(Resource):
+
     def post(self):
         dados = parametros.parse_args()
-
-        if Cliente.ListarPorCpf(dados['cpf']):
-            return {'message': 'Cliente já cadastrado'}, 400
-        cliente = Cliente(**dados)
-        cliente.SaveCliente()
-        return {'message': 'Cliente cadastrado com sucesso'}, 201
+        try:
+            if Cliente.ListarPorCpf(dados['cpf']):
+                return {'message': 'Cliente já cadastrado'}, 400
+            cliente = Cliente(**dados)
+            cliente.SaveCliente()
+            return {'message': 'Cliente cadastrado com sucesso'}, 201
+        except:
+            return{'message': 'Erro de servidor interno, Contate o admin para mais detalhes'}, 500
     
+
 class ClienteRoutes(Resource):
+    
     def get(self, id):
         try:
             cliente = Cliente.ListarClientes(id)
@@ -39,6 +52,7 @@ class ClienteRoutes(Resource):
             return {'message': 'Cliente não encontrado'}, 404
         except:
             return {'message': 'Erro de servidor interno, Contate o admin para mais detalhes'}, 500
+
 
     def put(self, id):
 
@@ -57,6 +71,7 @@ class ClienteRoutes(Resource):
         except:
             return {'message': 'Erro de servidor interno, Contate o admin para mais detalhes'}, 500
     
+
     def delete(self, id):
         try:
             cliente = Cliente.ListarClientes(id)
